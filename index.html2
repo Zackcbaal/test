@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Kosmetik</title>
+    <style>
+        body {
+            background-color: #FDEEED;
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-image: url("logo.jpg");
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        h1, h2, h3 {
+            color: black;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        ul a {
+            list-style-type: none;
+            padding: 0;
+            text-align: right;
+            margin-top: 20px;
+            margin-right: 20px;
+        }
+
+        li {
+            margin-bottom: 20px;
+        }
+
+        .product {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background-color: pink;
+            border-radius: 60px;
+            margin-bottom: 75px;
+        }
+
+        .product img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+
+        .rating {
+            color: gold;
+        }
+
+        footer {
+            background-color: pink;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        #totalPrice {
+            font-weight: bold;
+        }
+
+        .checkout-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #FF1493;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="Logo">
+            <h1>Toko Kosmetik</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#produk">Produk</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="alergi">
+            <h2>Pertanyaan </h2>
+            <p>Apakah Anda memiliki alergi terhadap beberapa produk kosmetik?</p>
+            <button onclick="searchProducts()">Ya</button>
+        </section>
+        
+        <section id="produk" style="display: none;">
+            <h2>Produk Kosmetik</h2>
+            <div id="productList"></div>
+        </section>
+        
+        <section id="keranjang" style="display: none;">
+            <h2>Keranjang Belanja</h2>
+            <div class="cart-container">
+                <div id="cartList"></div>
+                <p>Total Harga: <span id="totalPrice">0</span></p>
+                <button class="checkout-button" onclick="checkout()">Checkout</button>
+            </div>
+        </section>
+        
+        <section id="kontak" style="display: none;">
+            <h2>Kontak</h2>
+            <form>
+                <label for="nama">Nama:</label>
+                <input type="text" id="nama" name="nama" required><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="pesan">Pesan:</label><br>
+                <textarea id="pesan" name="pesan" required></textarea><br><br>
+                <button type="submit">Kirim</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Hak Cipta &copy; 2023 Toko Kosmetik</p>
+    </footer>
+
+    <script>
+        let products = [
+            {
+                name: "Lipstik",
+                price: 50000,
+                image: "lipstik.jpg",
+                rating: 4.5,
+                id: 1
+            },
+            {
+                name: "Maskara",
+                price: 75000,
+                image: "maskara.jpg",
+                rating: 4,
+                id: 2
+            },
+            {
+                name: "Foundation",
+                price: 100000,
+                image: "foundation.jpg",
+                rating: 4.2,
+                id: 3
+            }
+        ];
+
+        let cart = [];
+
+        function searchProducts() {
+            document.getElementById("alergi").style.display = "none";
+            document.getElementById("produk").style.display = "block";
+            let productList = document.getElementById("productList");
+            productList.innerHTML = "";
+            for (let i = 0; i < products.length; i++) {
+                let product = products[i];
+                let productElement = document.createElement("div");
+                productElement.classList.add("product");
+                let imageElement = document.createElement("img");
+                imageElement.src = product.image;
+                productElement.appendChild(imageElement);
+                let nameElement = document.createElement("h3");
+                nameElement.textContent = product.name;
+                productElement.appendChild(nameElement);
+                let priceElement = document.createElement("p");
+                priceElement.textContent = "Harga: Rp" + product.price;
+                productElement.appendChild(priceElement);
+                let ratingElement = document.createElement("p");
+                ratingElement.classList.add("rating");
+                ratingElement.textContent = "Rating: " + product.rating;
+                productElement.appendChild(ratingElement);
+                let buttonElement = document.createElement("button");
+                buttonElement.textContent = "Tambahkan ke Keranjang";
+                buttonElement.addEventListener("click", function() {
+                    addToCart(product);
+                });
+                productElement.appendChild(buttonElement);
+                productList.appendChild(productElement);
+            }
+        }
+
+        function addToCart(product) {
+            cart.push(product);
+            updateCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartList = document.getElementById("cartList");
+            cartList.innerHTML = "";
+            let totalPrice = 0;
+            for (let i = 0; i < cart.length; i++) {
+                let item = cart[i];
+                let cartItem = document.createElement("div");
+                cartItem.classList.add("cart-item");
+                let imageElement = document.createElement("img");
+                imageElement.src = item.image;
+                cartItem.appendChild(imageElement);
+                let nameElement = document.createElement("p");
+                nameElement.textContent = item.name;
+                cartItem.appendChild(nameElement);
+                let priceElement = document.createElement("p");
+                priceElement.textContent = "Harga: Rp" + item.price;
+                cartItem.appendChild(priceElement);
+                let removeButton = document.createElement("button");
+                removeButton.textContent = "Hapus";
+                removeButton.addEventListener("click", function() {
+                    removeItem(i);
+                });
+                cartItem.appendChild(removeButton);
+                cartList.appendChild(cartItem);
+                totalPrice += item.price;
+            }
+            document.getElementById("totalPrice").textContent = totalPrice;
+            if (cart.length > 0) {
+                document.getElementById("keranjang").style.display = "block";
+            } else {
+                document.getElementById("keranjang").style.display = "none";
+            }
+        }
+
+        function checkout() {
+            alert("Terima kasih telah melakukan pembelian!");
+            cart = [];
+            updateCart();
+        }
+    </script>
+</body>
+</html>
