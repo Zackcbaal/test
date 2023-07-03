@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Kosmetik - Lebih Menarik</title>
+    <style>
+        body {
+            background-color: #FDEEED;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+
+        header {
+            position: sticky;
+            top: 0;
+            background-color: #FFF;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 36px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            color: #FF1493;
+        }
+
+        h1, h2, h3 {
+            color: #FF1493;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: #FF1493;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        
+        nav ul li a:hover {
+            color: #FF69B4;
+        }
+
+        #produk {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .product {
+            width: 300px;
+            padding: 20px;
+            margin: 20px;
+            background-color: #FFF;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+            animation: productAnimation 0.5s ease-in-out forwards;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes productAnimation {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .product img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+        }
+
+        .rating {
+            color: gold;
+        }
+
+        .button-element {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .button-element:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background-color: pink;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out;
+            animation: cartAnimation 0.5s ease-in-out;
+        }
+        
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .cart-item:hover {
+            transform: scale(1.1);
+        }
+        
+        @keyframes cartAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        #totalPrice {
+            font-weight: bold;
+        }
+
+        .checkout-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #FF1493;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .checkout-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="Logo">
+            <h1>Toko Kosmetik</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#produk">Produk</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="alergi">
+            <h2>Pertanyaan</h2>
+            <p>Apakah Anda memiliki alergi terhadap beberapa produk kosmetik?</p>
+            <button onclick="searchProducts()" class="button-element">Tidak</button>
+        </section>
+        
+        <section id="produk" style="display: none;">
+            <h2>Produk Kosmetik</h2>
+            <div id="productList"></div>
+        </section>
+        
+        <section id="keranjang" style="display: none;">
+            <h2>Keranjang Belanja</h2>
+            <div class="cart-container">
+                <div id="cartList"></div>
+                <p>Total Harga: <span id="totalPrice">0</span></p>
+                <button class="checkout-button" onclick="checkout()">Checkout</button>
+            </div>
+        </section>
+        
+        <section id="kontak" style="display: none;">
+            <h2>Kontak</h2>
+            <form>
+                <label for="nama">Nama:</label>
+                <input type="text" id="nama" name="nama" required><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="pesan">Pesan:</label><br>
+                <textarea id="pesan" name="pesan" required></textarea><br><br>
+                <button type="submit">Kirim</button>
+            </form>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Hak Cipta &copy; 2023 Toko Kosmetik</p>
+    </footer>
+
+    <script>
+        let products = [
+            {
+                name: "Lipstik",
+                price: 50000,
+                image: "lipstik.jpg",
+                rating: 4.5,
+                id: 1
+            },
+            {
+                name: "Eyeliner",
+                price: 75000,
+                image: "eyeliner.jpg",
+                rating: 4,
+                id: 2
+            },
+            {
+                name: "Foundation",
+                price: 100000,
+                image: "foundation.jpg",
+                rating: 4.2,
+                id: 3
+            }
+            
+        ];
+
+        let cart = [];
+
+        function searchProducts() {
+            document.getElementById("alergi").style.display = "none";
+            document.getElementById("produk").style.display = "block";
+            let productList = document.getElementById("productList");
+            productList.innerHTML = "";
+            for (let i = 0; i < products.length; i++) {
+                let product = products[i];
+                let productElement = document.createElement("div");
+                productElement.classList.add("product");
+                let imageElement = document.createElement("img");
+                imageElement.src = product.image;
+                productElement.appendChild(imageElement);
+                let nameElement = document.createElement("h3");
+                nameElement.textContent = product.name;
+                productElement.appendChild(nameElement);
+                let priceElement = document.createElement("p");
+                priceElement.textContent = "Rp " + product.price;
+                productElement.appendChild(priceElement);
+                let ratingElement = document.createElement("p");
+                ratingElement.classList.add("rating");
+                ratingElement.textContent = "Rating: " + product.rating;
+                productElement.appendChild(ratingElement);
+                let addButton = document.createElement("button");
+                addButton.textContent = "Tambahkan ke Keranjang";
+                addButton.classList.add("button-element");
+                addButton.onclick = function() {
+                    addToCart(product);
+                };
+                productElement.appendChild(addButton);
+                productList.appendChild(productElement);
+            }
+        }
+
+        function addToCart(product) {
+            cart.push(product);
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartList = document.getElementById("cartList");
+            cartList.innerHTML = "";
+            let totalPrice = 0;
+            for (let i = 0; i < cart.length; i++) {
+                let cartItem = cart[i];
+                let cartItemElement = document.createElement("div");
+                cartItemElement.classList.add("cart-item");
+                let imageElement = document.createElement("img");
+                imageElement.src = cartItem.image;
+                cartItemElement.appendChild(imageElement);
+                let nameElement = document.createElement("p");
+                nameElement.textContent = cartItem.name;
+                cartItemElement.appendChild(nameElement);
+                let priceElement = document.createElement("p");
+                priceElement.textContent = "Rp " + cartItem.price;
+                cartItemElement.appendChild(priceElement);
+                cartList.appendChild(cartItemElement);
+                totalPrice += cartItem.price;
+            }
+            document.getElementById("totalPrice").textContent = totalPrice;
+            document.getElementById("keranjang").style.display = "block";
+        }
+
+        function checkout() {
+            alert("Terima kasih telah melakukan pembelian!");
+            cart = [];
+            updateCart();
+        }
+    </script>
+</body>
+</html>
