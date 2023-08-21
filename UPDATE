@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toko Kosmetik - Lebih Menarik</title>
     <style>
+        :root {
+            --main-color: #FF1493;
+            --hover-color: #FF69B4;
+        }
+        
+        
         body {
             background-color: #FDEEED;
             background-attachment: fixed;
@@ -170,6 +176,51 @@
         .checkout-button:hover {
             transform: scale(1.1);
         }
+        
+         .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media screen (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+        
+        /* Additional styles for form */
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--main-color);
+            font-weight: bold;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button[type="submit"] {
+            padding: 10px 20px;
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        form button[type="submit"]:hover {
+            transform: scale(1.1);
+            background-color: var(--hover-color);
+        }
     </style>
 </head>
 <body>
@@ -187,7 +238,7 @@
         </nav>
     </header>
     
-    <main>
+     <main class="grid-container">
         <section id="alergi">
             <h2>Pertanyaan</h2>
             <p>Apakah Anda memiliki alergi terhadap beberapa produk kosmetik?</p>
